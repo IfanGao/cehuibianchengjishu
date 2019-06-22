@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WindowsFormsApp1
+{
+    class AngleTransformCal
+    {
+        private double radian;     //弧度制
+        private double angle;     //度分秒
+        private double decimalDegree;   //十进制度。
+
+        public AngleTransformCal(double radian)
+        {
+            this.radian = radian;   //引用成员变量，当变量名不重复的时候，可以省略。
+        }
+
+        public string Transform1(double radian)     //弧度转化为度分秒
+        {
+            const double PI = Math.PI;
+            double angle;
+            angle = radian * 180 / PI;   //转换公式
+
+            double du, fen, miao;      //将angle转化为度分秒
+            du = Math.Floor((double)angle);
+            fen = Math.Floor((double)(angle - du) * 60);
+            miao = Math.Floor((double)((angle - du) * 60 - fen) * 60);
+
+            angle = du + fen * 0.01 + miao * 0.0001;  //度分秒以截取的形式输出
+            string z = Convert.ToString(angle);
+            return z;
+        }
+
+        public string Transform2(double angle)   //度分秒转化为弧度制
+        {
+            const double PI = Math.PI;
+            double radian, du, fen, miao;
+
+            du = Math.Floor((double)angle);
+            fen = Math.Floor((angle - Math.Floor((double)angle)) * 100);
+            miao = (angle - du - fen*0.01) * 10000;       //依次截取度分秒
+
+            radian = du + ((miao / 60) + fen) / 60;  //转换
+            radian = radian * PI / 180;
+
+            string z = Convert.ToString(radian);
+            return z;
+        }
+        public string Transform3(double decimalDegree)  //十进制度转度分秒
+        {
+            double du, fen, miao;
+            du = Math.Floor((double)decimalDegree);
+            fen = Math.Floor((double)((decimalDegree - du) * 60));
+            miao = ((decimalDegree - du) * 60 - fen) * 60;
+
+            double angle;
+            angle = du + fen * 0.01 + miao * 0.0001;
+
+            string z = Convert.ToString(angle);
+            return z;
+        }
+        public string Transform4(double angle) //度分秒转化为十进制度
+        {
+            double du, fen, miao;
+
+            du = Math.Floor((double)angle);
+            fen = Math.Floor((angle - Math.Floor((double)angle)) * 100);
+            miao = (angle - du - fen*0.01) * 10000;       //依次截取度分秒
+
+            double decimalDegrees = du + ((miao / 60) + fen) / 60;
+
+            string z = Convert.ToString(decimalDegrees);
+            return z;
+        }
+        public string Transform5(double radian)    //弧度转化为十进制度
+        {
+            const double PI = Math.PI;
+            double decimalDegrees = radian * 180 / PI;
+
+            string z = Convert.ToString(decimalDegrees);
+            return z;
+        }
+        public string Transform6(double decimalDegrees)  //十进制度转化为弧度
+        {
+            const double PI = Math.PI;
+            double radian = decimalDegrees / 180 * PI;
+
+            string z = Convert.ToString(radian);
+            return z;
+        }
+    }
+}
